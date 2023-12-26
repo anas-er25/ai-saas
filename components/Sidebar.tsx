@@ -68,10 +68,10 @@ const Sidebar = () => {
     <div className="space-y-4 py-4 flex flex-col h-full text-white bg-[#131212]">
       <div className="px-3 py-2 flex-1">
         <Link href="/dashboard" className="flex items-center pl-3 mb-8">
-          <div className="relative w-8 h-8 mr-4">
-            <Image fill alt="logo" src="/logo.svg" />
+          <div className="relative h-8 w-8 mr-4">
+            <Image fill alt="logo" src="/logo.png" />
           </div>
-          <h1 className={cn("text-2xl font-bold", poppins.className)}>
+          <h1 className={cn("text-lg font-bold text-[#fa8334]", poppins.className)}>
             POTA.AI
           </h1>
         </Link>
