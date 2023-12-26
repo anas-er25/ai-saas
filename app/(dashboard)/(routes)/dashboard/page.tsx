@@ -56,7 +56,7 @@ export default function DashboardPage() {
   return (
     <div>
       <div className="mb-8 space-y-4">
-        <h2 className="text-2xl md:text-4xl font-bold text-center mt-9 text-[#001B79]">
+        <h2 className="text-2xl md:text-4xl font-bold text-center mt-9 text-pink-700  ">
           Welcome to POTA.AI
         </h2>
         <p className="text-muted-foreground text-center text-sm md:text-lg ">Chat with the smartest AI.</p>

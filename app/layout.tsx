@@ -3,7 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
+const customClassName = `${inter.className} bg-[#1d1c1c]`;
 
 export const metadata: Metadata = {
   title: 'POTA.AI',
@@ -19,7 +20,7 @@ export default function RootLayout({
     <ClerkProvider>
   <link rel="icon" href="/logo.svg" sizes="any" />
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={customClassName}>{children}</body>
       </html>
     </ClerkProvider>
   )
