@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-  <link rel="icon" href="/logo.svg" sizes="any" />
+  <link rel="icon" href="/logo.png" sizes="any" />
       <html lang="en">
         <body className={customClassName}>{children}</body>
       </html>
