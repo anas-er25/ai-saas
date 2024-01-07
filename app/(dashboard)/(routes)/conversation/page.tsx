@@ -2,7 +2,8 @@
 import * as z from "zod";
 import Image from "next/image";
 import Heading from "@/components/Heading";
-import {  MessageSquare } from "lucide-react";
+import { MessageSquare } from "lucide-react";
+import { Loader } from "@/components/loader";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -14,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ChatCompletionRequestMessage } from "openai";
 import { FaPaperPlane } from "react-icons/fa";
+import { Empty } from "@/components/ui/empty";
 
 const ConversationPage = () => {
   const router = useRouter();
@@ -22,19 +24,19 @@ const ConversationPage = () => {
   const [tab, setTab] = useState([]);
 
   const copyToClipboard = (textToCopy, index) => {
-    const tempInput = document.createElement('textarea');
+    const tempInput = document.createElement("textarea");
     tempInput.value = textToCopy;
 
     document.body.appendChild(tempInput);
     tempInput.select();
     tempInput.setSelectionRange(0, 99999);
-    document.execCommand('copy');
+    document.execCommand("copy");
     document.body.removeChild(tempInput);
 
     // Update the buttonText for the clicked button
     setTab((prevTab) => {
       const newTab = [...prevTab];
-      newTab[index].buttonText = 'Copied';
+      newTab[index].buttonText = "Copied";
       return newTab;
     });
 
@@ -42,7 +44,7 @@ const ConversationPage = () => {
     setTimeout(() => {
       setTab((prevTab) => {
         const newTab = [...prevTab];
-        newTab[index].buttonText = 'Copy';
+        newTab[index].buttonText = "Copy";
         return newTab;
       });
     }, 2000);
@@ -69,7 +71,7 @@ const ConversationPage = () => {
         messages: newMessages,
       });
       const newTab = [userMessage, response.data];
-      setTab((prevData)=>[...prevData,newTab]);
+      setTab((prevData) => [...prevData, newTab]);
 
       setMessages((current) => [...current, userMessage, response.data]);
 
@@ -125,40 +127,44 @@ const ConversationPage = () => {
             </form>
           </Form>
         </div>
-      </div>
-      <div className="">
-        {tab.map((message, index) => {
-          // console.log(message);
-          // console.log("tab:", tab);
-          // console.log("tab:", message[0]['content']);
-          // console.log("tab:", message[1]['content']);
+        <div className="space-y-4 mt-4">
+          {isLoading && (
+            <div className="p-20">
+              <Loader />
+            </div>
+          )}
+          {messages.length === 0 && !isLoading && (
+            <Empty label="No conversation started." />
+          )}
+          <div className="">
+            {tab.map((message, index) => {
+              return (
+                <>
+                  <div className="flex flex-col border-none rounded-3xl ms-10 me-10 mt-5 bg-[#424242] text-white p-6">
+                    <p className="pb-3">{message[0]["content"]}</p>
+                    <hr />
+                    <div className="bg-[#424242] text-white flex justify-between mt-3">
+                      <div className="sticky h-8 w-8">
+                        <Image fill alt="logo" src="/logo.png" />
+                      </div>
+                      <button
+                        onClick={() => {
+                          copyToClipboard(message[1]["content"], index);
+                        }}
+                      >
+                        {message.buttonText || "Copy"}
+                      </button>
+                    </div>
 
-          // if(message.role==="assistant"){
-          return (
-            <>
-              <div className="flex flex-col border-none rounded-3xl ms-10 me-10 mt-5 bg-[#424242] text-white p-6">
-                <p className="pb-3">{message[0]['content']}</p>
-                <hr />
-                <div className="bg-[#424242] text-white flex justify-between mt-3">
-                <div className="sticky h-8 w-8">
-            <Image fill alt="logo" src="/logo.png" />
+                    <div className="mt-5" key={message[0]["content"]}>
+                      {message[1]["content"]}
+                    </div>
+                  </div>
+                </>
+              );
+            })}
           </div>
-          <button
-              onClick={() => {
-                copyToClipboard(message[1]['content'], index);
-              }}
-            >
-              {message.buttonText || 'Copy'}
-            </button>
-                </div>
-
-                <div className="mt-5" key={message[0]['content']}>
-                  {message[1]['content']}
-                </div>
-              </div>
-            </>
-          );
-        })}
+        </div>
       </div>
     </div>
   );
