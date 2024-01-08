@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Loader } from "@/components/loader";
 import { ChatCompletionRequestMessage } from "openai";
 import { FaPaperPlane } from "react-icons/fa";
 
@@ -124,9 +125,15 @@ const ConversationPage = () => {
               </Button>
             </form>
           </Form>
+
         </div>
       </div>
       <div className="">
+      {isLoading && (
+            <div className="p-20">
+              <Loader />
+            </div>
+          )}
         {tab.map((message, index) => {
           // console.log(message);
           // console.log("tab:", tab);

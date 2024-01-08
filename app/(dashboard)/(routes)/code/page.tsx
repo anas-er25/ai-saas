@@ -16,6 +16,7 @@ import { useState } from "react";
 import { ChatCompletionRequestMessage } from "openai";
 import { FaPaperPlane } from "react-icons/fa";
 import { Empty } from "@/components/ui/empty";
+import ReactMarkdown from "react-markdown";
 
 const CodePage = () => {
   const router = useRouter();
@@ -127,6 +128,7 @@ const CodePage = () => {
             </form>
           </Form>
         </div>
+        </div>
         <div className="space-y-4 mt-4">
           {isLoading && (
             <div className="p-20">
@@ -157,7 +159,14 @@ const CodePage = () => {
                     </div>
 
                     <div className="mt-5" key={message[0]["content"]}>
-                      {message[1]["content"]}
+                      <ReactMarkdown
+                      components={{
+                        pre:({node, ...props }) => (<div className="overflow-auto w-full my-2 p-2 bg-black/25 rounded-lg"><pre {...props} /></div>),
+                        code:({node, ...props }) => (<code className=" bg-black/25 rounded-lg p-1" {...props} />), 
+                      }}
+                      className="text-sm overflow-hidden leading-7"
+                      >{message[1]["content"]}</ReactMarkdown>
+                      
                     </div>
                   </div>
                 </>
@@ -166,7 +175,6 @@ const CodePage = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

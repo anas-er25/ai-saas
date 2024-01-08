@@ -18,6 +18,8 @@ import { Empty } from "@/components/ui/empty";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Card, CardFooter } from "@/components/ui/card";
 
+
+
 const ImagePage = () => {
   const router = useRouter();
   const [Images, setImages]= useState<string[]>([]);
@@ -109,32 +111,7 @@ const ImagePage = () => {
                   </Select>
                   </FormItem>
             } control={form.control}/>
-            <FormField name="resolution" render={({ field })=>
-                  <FormItem className="col-span-12 lg:col-span-2">
-                    <Select 
-                    disabled={isLoading} 
-                    onValueChange={field.onChange} 
-                    value={field.value} 
-                    defaultValue={field.value}
-                  >
-                    <FormControl className="bg-[#424242] text-white border-none">
-                      <SelectTrigger>
-                        <SelectValue defaultValue={field.value} />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent className="bg-[#424242] text-white">
-                      {resolutionOptions.map((option) => (
-                        <SelectItem 
-                          key={option.value} 
-                          value={option.value}
-                        >
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  </FormItem>
-            } control={form.control}/>
+            
               <Button
                 className="col-span-12 md:col-span-1 bg-[#424242] hover:bg-[#4d4d4b] w-full"
                 disabled={isLoading}
@@ -143,6 +120,7 @@ const ImagePage = () => {
               </Button>
             </form>
           </Form>
+        </div>
         </div>
         <div className="space-y-4 mt-4">
         {isLoading && (
@@ -155,6 +133,7 @@ const ImagePage = () => {
           )}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
           {Images.map((src) => (
+            
             <Card key={src} className="rounded-lg overflow-hidden">
               <div className="relative aspect-square">
                 <Image
@@ -168,13 +147,13 @@ const ImagePage = () => {
                   <Download className="h-4 w-4 mr-2" />
                   Download
                 </Button>
+            
               </CardFooter>
             </Card>
           ))}
         </div>
         </div>
       </div>
-    </div>
   );
 };
 
